@@ -12,7 +12,6 @@ const path = d3.geoPath().projection(projection);
 
 d3.json(urls.worldMap, (geojson) => {
   svg.append('path')
-    .attr('d', path(geojson))
-    .attr('stroke', '#fff')
-    .attr('stroke-width', 0.1);
+    .attr('class', 'worldMap')
+    .attr('d', path(geojson));
 });
