@@ -14,4 +14,17 @@ d3.json(urls.worldMap, (geojson) => {
   svg.append('path')
     .attr('class', 'worldMap')
     .attr('d', path(geojson));
+
+  d3.json(urls.meteoriteLandings, ({features}) => {
+    const plottableFeatures = features.filter((f) => f.geometry);
+
+    svg.selectAll('circle')
+      .data(plottableFeatures)
+      .enter()
+      .append('circle')
+      .attr('r', 3)
+      .attr('cx', (d) => projection(d.geometry.coordinates)[0])
+      .attr('cy', (d) => projection(d.geometry.coordinates)[1])
+      .attr('fill', 'rgba(255,128,0,.5)');
+  });
 });
