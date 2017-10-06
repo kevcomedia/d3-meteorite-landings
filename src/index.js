@@ -1,4 +1,5 @@
 import * as d3 from './d3.exports.js';
+import tip from 'd3-tip';
 import {urls} from './urls.js';
 
 const svg = d3.select('svg');
@@ -16,6 +17,8 @@ const radiusScale = d3.scalePow().exponent(0.75)
 const colorScale = d3.scalePow().exponent(0.1)
   .range(['#e4ff1a', '#ff5714']);
 
+const tooltip = tip().attr('class', 'tooltip');
+
 d3.json(urls.worldMap, (geojson) => {
   svg.append('path')
     .attr('class', 'worldMap')
@@ -28,6 +31,25 @@ d3.json(urls.worldMap, (geojson) => {
     radiusScale.domain(massExtent);
     colorScale.domain(massExtent);
 
+    tooltip.html(({properties}) => {
+      const year = new Date(properties.year).getFullYear();
+      const massFormat = d3.format(',');
+      const latLongFormat = d3.format('.6');
+
+      return `<h2>${properties.name} (${year})</h2>
+        <dl>
+          <dt>Class</dt>
+          <dd>${properties.recclass}</dd>
+          <dt>Mass</dt>
+          <dd>${massFormat(properties.mass)}</dd>
+          <dt>Rec. Lat.</dt>
+          <dd>${latLongFormat(properties.reclat)}</dd>
+          <dt>Rec. Long.</dt>
+          <dd>${latLongFormat(properties.reclong)}</dd>
+        </dl>`;
+    });
+    svg.call(tooltip);
+
     svg.selectAll('circle')
       .data(plottableFeatures)
       .enter()
@@ -36,6 +58,8 @@ d3.json(urls.worldMap, (geojson) => {
       .attr('cx', (d) => projection(d.geometry.coordinates)[0])
       .attr('cy', (d) => projection(d.geometry.coordinates)[1])
       .attr('fill', (d) => colorScale(+d.properties.mass))
-      .attr('opacity', 0.75);
+      .attr('opacity', 0.75)
+      .on('mouseenter', tooltip.show)
+      .on('mouseout', tooltip.hide);
   });
 });

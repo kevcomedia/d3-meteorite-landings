@@ -6,6 +6,7 @@
  */
 
 export * from 'd3-array';
+export * from 'd3-format';
 export * from 'd3-geo';
 export * from 'd3-request';
 export * from 'd3-scale';
