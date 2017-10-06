@@ -1,28 +1,18 @@
 import * as d3 from './d3.exports.js';
+import {urls} from './urls.js';
 
-/**
- * Feel free to modify/remove anything below.
- */
+const svg = d3.select('svg');
+const width = +svg.attr('width');
+const height = +svg.attr('height');
 
-const data = [20, 10, 30];
+// Dividing height by 1.7 cuts of Antarctica and some parts of northern
+// landmasses, but there's nothing to show on those parts.
+const projection = d3.geoMercator().translate([width / 2, height / 1.7]);
+const path = d3.geoPath().projection(projection);
 
-const svg = d3.select('svg')
-  .attr('width', 600)
-  .attr('height', 300);
-
-const xScale = d3.scaleLinear()
-  .domain([0, data.length - 1])
-  .range([100, 500]);
-
-const colorScale = d3.scaleLinear()
-  .domain([d3.min(data), d3.max(data)])
-  .range(['orange', 'blue']);
-
-svg.selectAll('circle')
-  .data(data)
-  .enter()
-  .append('circle')
-  .attr('fill', (d) => colorScale(d))
-  .attr('cx', (d, i) => xScale(i))
-  .attr('cy', 150)
-  .attr('r', (d) => d * 3);
+d3.json(urls.worldMap, (geojson) => {
+  svg.append('path')
+    .attr('d', path(geojson))
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 0.1);
+});
