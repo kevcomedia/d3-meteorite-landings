@@ -10,6 +10,9 @@ const height = +svg.attr('height');
 const projection = d3.geoMercator().translate([width / 2, height / 1.7]);
 const path = d3.geoPath().projection(projection);
 
+const radiusScale = d3.scaleLinear()
+  .range([1, 30]);
+
 d3.json(urls.worldMap, (geojson) => {
   svg.append('path')
     .attr('class', 'worldMap')
@@ -18,11 +21,13 @@ d3.json(urls.worldMap, (geojson) => {
   d3.json(urls.meteoriteLandings, ({features}) => {
     const plottableFeatures = features.filter((f) => f.geometry);
 
+    radiusScale.domain(d3.extent(plottableFeatures, (d) => +d.properties.mass));
+
     svg.selectAll('circle')
       .data(plottableFeatures)
       .enter()
       .append('circle')
-      .attr('r', 3)
+      .attr('r', (d) => radiusScale(+d.properties.mass))
       .attr('cx', (d) => projection(d.geometry.coordinates)[0])
       .attr('cy', (d) => projection(d.geometry.coordinates)[1])
       .attr('fill', 'rgba(255,128,0,.5)');
