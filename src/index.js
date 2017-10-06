@@ -13,6 +13,9 @@ const path = d3.geoPath().projection(projection);
 const radiusScale = d3.scaleLinear()
   .range([1, 30]);
 
+const colorScale = d3.scalePow().exponent(0.1)
+  .range(['#e4ff1a', '#ff5714']);
+
 d3.json(urls.worldMap, (geojson) => {
   svg.append('path')
     .attr('class', 'worldMap')
@@ -20,8 +23,10 @@ d3.json(urls.worldMap, (geojson) => {
 
   d3.json(urls.meteoriteLandings, ({features}) => {
     const plottableFeatures = features.filter((f) => f.geometry);
+    const massExtent = d3.extent(plottableFeatures, (d) => +d.properties.mass);
 
-    radiusScale.domain(d3.extent(plottableFeatures, (d) => +d.properties.mass));
+    radiusScale.domain(massExtent);
+    colorScale.domain(massExtent);
 
     svg.selectAll('circle')
       .data(plottableFeatures)
@@ -30,6 +35,7 @@ d3.json(urls.worldMap, (geojson) => {
       .attr('r', (d) => radiusScale(+d.properties.mass))
       .attr('cx', (d) => projection(d.geometry.coordinates)[0])
       .attr('cy', (d) => projection(d.geometry.coordinates)[1])
-      .attr('fill', 'rgba(255,128,0,.5)');
+      .attr('fill', (d) => colorScale(+d.properties.mass))
+      .attr('opacity', 0.75);
   });
 });
