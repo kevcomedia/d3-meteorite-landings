@@ -6,7 +6,7 @@ import * as d3 from './d3.exports.js';
 
 const data = [20, 10, 30];
 
-const svg = d3.select('#chart')
+const svg = d3.select('svg')
   .attr('width', 600)
   .attr('height', 300);
 
