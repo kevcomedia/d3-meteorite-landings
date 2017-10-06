@@ -26,6 +26,8 @@ d3.json(urls.worldMap, (geojson) => {
 
   d3.json(urls.meteoriteLandings, ({features}) => {
     const plottableFeatures = features.filter((f) => f.geometry);
+    plottableFeatures.sort((a, b) => b.properties.mass - a.properties.mass);
+
     const massExtent = d3.extent(plottableFeatures, (d) => +d.properties.mass);
 
     radiusScale.domain(massExtent);
