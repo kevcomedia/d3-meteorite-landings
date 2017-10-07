@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   color: #444;
   font-family: sans-serif;
@@ -19,5 +25,34 @@ svg {
 
 .tooltip {
   background-color: #444;
+  border-radius: 2px;
   color: #eee;
+  padding: .1em 1em;
+
+  h2 {
+    font-size: (4em/3);
+  }
+
+  dl {
+    display: flex;
+    flex-flow: row wrap;
+    width: 200px;
+  }
+
+  dt,
+  dd {
+    flex: 0 0 50%;
+  }
+
+  dt {
+    font-weight: bold;
+
+    &::after {
+      content: ':';
+    }
+  }
+
+  dd {
+    margin-left: auto;
+  }
 }
