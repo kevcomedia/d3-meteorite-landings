@@ -1,5 +1,5 @@
 {
-  "name": "d3-starter",
+  "name": "d3-meteorite-landings",
   "version": "1.0.0",
   "description": "Starter config for d3 projects",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevcomedia/d3-starter.git"
+    "url": "git+https://github.com/kevcomedia/d3-meteorite-landings.git"
   },
   "keywords": [
     "d3",
@@ -18,9 +18,9 @@
   "author": "Kev Comedia",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kevcomedia/d3-starter/issues"
+    "url": "https://github.com/kevcomedia/d3-meteorite-landings/issues"
   },
-  "homepage": "https://github.com/kevcomedia/d3-starter#readme",
+  "homepage": "https://github.com/kevcomedia/d3-meteorite-landings#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
