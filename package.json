@@ -1,6 +1,6 @@
 {
-  "name": "d3-starter",
-  "version": "1.0.1",
+  "name": "d3-meteorite-landings",
+  "version": "1.0.0",
   "description": "Starter config for d3 projects",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevcomedia/d3-starter.git"
+    "url": "git+https://github.com/kevcomedia/d3-meteorite-landings.git"
   },
   "keywords": [
     "d3",
@@ -18,9 +18,9 @@
   "author": "Kev Comedia",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kevcomedia/d3-starter/issues"
+    "url": "https://github.com/kevcomedia/d3-meteorite-landings/issues"
   },
-  "homepage": "https://github.com/kevcomedia/d3-starter#readme",
+  "homepage": "https://github.com/kevcomedia/d3-meteorite-landings#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -34,6 +34,7 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "surge": "^0.19.0",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.6",
     "webpack-build-notifier": "^0.1.16",
