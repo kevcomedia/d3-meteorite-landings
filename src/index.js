@@ -13,6 +13,14 @@ const g = svg.append('g');
 const projection = d3.geoMercator().translate([width / 2, height / 1.7]);
 const path = d3.geoPath().projection(projection);
 
+const zoom = d3.zoom()
+  .scaleExtent([1, 30])
+  .on('zoom', () => {
+    g.attr('transform', d3.event.transform);
+  });
+
+svg.call(zoom);
+
 const radiusScale = d3.scalePow().exponent(0.75)
   .range([1, 30]);
 
