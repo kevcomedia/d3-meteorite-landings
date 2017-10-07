@@ -6,10 +6,20 @@ const svg = d3.select('svg');
 const width = +svg.attr('width');
 const height = +svg.attr('height');
 
+const g = svg.append('g');
+
 // Dividing height by 1.7 cuts of Antarctica and some parts of northern
 // landmasses, but there's nothing to show on those parts.
 const projection = d3.geoMercator().translate([width / 2, height / 1.7]);
 const path = d3.geoPath().projection(projection);
+
+const zoom = d3.zoom()
+  .scaleExtent([1, 30])
+  .on('zoom', () => {
+    g.attr('transform', d3.event.transform);
+  });
+
+svg.call(zoom);
 
 const radiusScale = d3.scalePow().exponent(0.75)
   .range([1, 30]);
@@ -20,7 +30,7 @@ const colorScale = d3.scalePow().exponent(0.1)
 const tooltip = tip().attr('class', 'tooltip');
 
 d3.json(urls.worldMap, (geojson) => {
-  svg.append('path')
+  g.append('path')
     .attr('class', 'worldMap')
     .attr('d', path(geojson));
 
@@ -52,7 +62,7 @@ d3.json(urls.worldMap, (geojson) => {
     });
     svg.call(tooltip);
 
-    svg.selectAll('circle')
+    g.selectAll('circle')
       .data(plottableFeatures)
       .enter()
       .append('circle')
